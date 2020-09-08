@@ -1,0 +1,13 @@
+# EPIC2-user 4.4.2 KOT49H 20171215.140555 release-keys
+- manufacturer: leapfrog
+- platform: mtk
+- codename: UYT2
+- flavor: user
+- release: 4.4.2
+- id: KOT49H
+- incremental: user.20171215.140555
+- tags: release-keys
+- fingerprint: LeapFrog2/EPIC2/UYT2:4.4.2/KOT49H/20171215.140555:user/release-keys
+- brand: LeapFrog2
+- branch: EPIC2-user-4.4.2-KOT49H-20171215.140555-release-keys
+- repo: leapfrog2_uyt2_dump

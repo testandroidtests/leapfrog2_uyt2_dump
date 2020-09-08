@@ -1,0 +1,44 @@
+on boot
+# pre_install
+    chown root root /system/pre_in
+	mkdir /data/local/POP
+	chmod 777 /data/local/POP
+	mkdir /data/local/POP/video
+	chmod 777 /data/local/POP/video
+# APK pre-installation
+service pre_install /system/bin/sh /system/pre_in/pre_install.sh
+    user root
+    oneshot
+    disabled
+
+# enable/disable package/component after boot-completed because PM is not ready until then
+on property:dev.bootcomplete=1
+   start pre_install
+
+# set locale language and country
+service setlocale /system/bin/sh /setlocale.sh
+    user root
+    group root
+    oneshot
+    disabled # this is not necessary since it has no class specified
+
+    # pre-set locale
+    # chmod 0664 /setlocale.sh
+
+# we should wait unitl nvram is ready; otherwise, we may not be able to read SKU and devsn
+on property:nvram_init=Ready
+    start setlocale
+
+# +++ [QuantaMTP:Eria] Start
+on property:persist.sys.quanta-mtp.enable=1
+       start mtpserver
+
+on property:persist.sys.quanta-mtp.enable=0
+       stop mtpserver
+
+service mtpserver /system/bin/mtpserver
+       class main
+       user root
+       disabled
+# +++ [QuantaMTP:Eria] End
+
